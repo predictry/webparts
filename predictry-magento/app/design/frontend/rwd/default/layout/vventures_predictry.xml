@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <block type="vventures_predictry/script" name="vventures_script" as="vventures_script" template="vventures/predictry/script.phtml"/>
+        </reference>
+        <reference name="before_body_end">
+            <block type="vventures_predictry/action" name="vventures_action" as="vventures_action" template="vventures/predictry/action.phtml"/>
+        </reference>
+    </default>
+</layout>

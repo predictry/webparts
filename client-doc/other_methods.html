@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Other Methods</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h3 id="rest-api">Rest API</h3>
+
+
+
+<h4 id="version-024">Version 0.2.4</h4>
+
+<hr>
+
+<p>Other methods that can be used are listed below. Will update it periodically.</p>
+
+<p>URL: <a href="http://api-aws.predictry.com/">http://api-aws.predictry.com/</a></p>
+
+
+
+<h3 id="1-update-item-status">1. Update Item Status</h3>
+
+<p>When item removed from the catalog, or maybe sold out. To make it possible disappear from recommendation results is remove it.</p>
+
+<table>
+<thead>
+<tr>
+  <th>Protocol method</th>
+  <th>REST API URL</th>
+  <th>Params</th>
+</tr>
+</thead>
+<tbody><tr>
+  <td>DELETE</td>
+  <td>/v2/items</td>
+  <td>/{item_id}</td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-sh hljs haml"> curl -X DELETE "http://api-aws.predictry.com/v2/items/5205" \ 
+ -<span class="ruby"><span class="hljs-constant">H</span> <span class="hljs-string">"Accept: application/json"</span> \ 
+</span> -<span class="ruby"><span class="hljs-constant">H</span> <span class="hljs-string">"X-Predictry-Server-Tenant-ID: $TENANT_ID"</span> \ 
+</span> -<span class="ruby"><span class="hljs-constant">H</span> <span class="hljs-string">"X-Predictry-Server-Api-Key: $API_KEY"</span></span></code></pre>
+
+<p>Sample response</p>
+
+
+
+<pre class="prettyprint"><code class="language-json hljs ">{
+   "<span class="hljs-attribute">error</span>":<span class="hljs-value"><span class="hljs-literal">false</span></span>,
+   "<span class="hljs-attribute">status</span>":<span class="hljs-value"><span class="hljs-number">200</span></span>,
+   "<span class="hljs-attribute">message</span>":<span class="hljs-value"><span class="hljs-string">"Item succesfully removed"</span></span>,
+   "<span class="hljs-attribute">client_message</span>":<span class="hljs-value"><span class="hljs-string">""</span>
+</span>}</code></pre>
+
+<p>Updated: 10 Dec, 2014 @ 10.45AM <br>
+Author: rifki@predicrty.com</p></div></body>
+</html>

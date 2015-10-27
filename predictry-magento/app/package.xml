@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>VVentures_Predictry</name>
+    <version>1.0.0</version>
+    <stability>beta</stability>
+    <license uri="http://www.predictry.com">Commercial</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Predictry is recommendation engine.</summary>
+    <description>Predictry is recommendation engine.</description>
+    <notes>This extension still in Beta, any enquire please contact hello@predictry.com.</notes>
+    <authors><author><name>Rifki Yandhi</name><user>ikyandhi</user><email>rifkiyandhi@gmail.com</email></author></authors>
+    <date>2014-07-24</date>
+    <time>03:53:30</time>
+    <contents><target name="magelocal"><dir name="VVentures"><dir name="Predictry"><dir name="Block"><file name="Action.php" hash="1587dd3f4aa7ddf9d97b68cc83739efe"/><file name="Recommendation.php" hash="0cda1f580abfbaa6e09d3ff5ec9cb3fa"/><file name="Script.php" hash="53ba8622b2c8635333d6275bb2fe02ff"/><dir name="Widget"><file name="Recommendation.php" hash="59619a1a77fdc4c6c0e24eb780da66a1"/></dir></dir><dir name="Helper"><file name="Data.php" hash="026e3ad1410a70e6dd5abba3cfdb9249"/></dir><dir name="Model"><file name="Observer.php" hash="964d517f07d0030bb388bc808e7eacf3"/></dir><dir name="etc"><file name="config.xml" hash="35e296da0fb2f96385ddc3e89086bb78"/><file name="system.xml" hash="f412363e9a7ec51fa434dbbe374f9bcc"/><file name="widget.xml" hash="edbbe5a02d89407d70611675b1ce89ca"/></dir><file name=".DS_Store" hash="7469e81d11d90a4e9f9766e87c4a3160"/></dir><file name=".DS_Store" hash="0d7192fd139ebf825a1255b4e3f3500f"/></dir></target><target name="magedesign"><dir name="frontend"><dir name="rwd"><dir name="default"><dir name="template"><dir name="vventures"><dir><dir name="predictry"><file name="action.phtml" hash="e5a9869596dad7871a78d603f7ef97ca"/><file name="script.phtml" hash="adfebc1778ceefcbea8ae4cb23b7d334"/><dir name="widget"><file name="recommendation.phtml" hash="103731741a39968614c19e877a4381af"/></dir></dir></dir></dir></dir><dir name="layout"><file name="vventures_predictry.xml" hash="93ead06d5d33253dcdf4235300fd9ef2"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="VVentures_Predictry.xml" hash="cec347a6a891fb99ced73a1c1994b95d"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

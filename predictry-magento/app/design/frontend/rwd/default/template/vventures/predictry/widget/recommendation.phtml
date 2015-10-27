@@ -1,0 +1,34 @@
+<?php
+$this->_prepareData();
+$count	 = 1;
+$limit	 = $this->getItemLimit();
+?>
+<?php if (count($this->getItemCollection()) > 0): ?>
+	<?php if (count($this->getItemCollection()->getItems())): ?>
+		<?php $_columnCount = $this->getColumnCount(); ?>
+		<div class="predictry-box box-recommendation">
+			<h2><?php echo $this->getWidgetTitle() ?></h2>
+			<ul class="products-grid--max-<?php echo $_columnCount; ?>-col" id="upsell-product-table">
+				<?php $this->resetItemsIterator() ?>
+				<?php foreach ($this->getItemCollection()->getItems() as $_link): ?>
+					<li <?php if ($this->getStyleAppearance() === 'horizontal') echo "style='float: left;'"; ?> >
+						<a href="<?php echo $_link->getProductUrl() . '?predictry_src=' . $this->getWidgetInstanceId(); ?>" title="<?php echo $this->escapeHtml($_link->getName()) ?>" class="">
+							<img src="<?php echo $this->helper('catalog/image')->init($_link, 'small_image')->resize($this->getThumbnailSize()) ?>" alt="<?php echo $this->escapeHtml($_link->getName()) ?>" />
+						</a>
+						<h3 class="product-name"><a href="<?php echo $_link->getProductUrl() . '?predictry_src=' . $this->getWidgetInstanceId(); ?>" title="<?php echo $this->escapeHtml($_link->getName()) ?>"><?php echo $this->escapeHtml($_link->getName()) ?></a></h3>
+							<?php echo $this->getPriceHtml($_link, true, '-upsell') ?>
+							<?php echo $this->getReviewsSummaryHtml($_link) ?>
+					</li>
+
+					<?php
+					if (($count) >= $limit)
+						break;
+					$count++;
+				endforeach;
+				?>
+			</ul>
+		</div>
+		<?php
+	endif;
+endif;
+?>

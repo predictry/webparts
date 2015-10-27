@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+    <modules>
+        <VVentures_Predictry>
+            <version>0.0.1</version>
+        </VVentures_Predictry>
+    </modules>
+
+    <global>
+
+        <blocks>
+            <vventures_predictry>
+                <class>VVentures_Predictry_Block</class>
+            </vventures_predictry>
+        </blocks>
+
+        <helpers>
+            <vventures_predictry>
+                <class>VVentures_Predictry_Helper</class>
+            </vventures_predictry>
+        </helpers>
+
+        <models>
+            <vventures_predictry>
+                <class>VVentures_Predictry_Model</class>
+            </vventures_predictry>
+        </models>
+
+        <events>
+            <!-- save product detail on admin page -->
+            <catalog_product_save_after>
+                <observers>
+                    <vventures_predictry>
+                        <!-- the model to be instantiated -->
+                        <class>vventures_predictry/observer</class>
+                        <!-- the method of the class to be called -->
+                        <method>logUpdate</method>
+                        <!-- The type of class to instantiate -->
+                        <type>singleton</type>
+                    </vventures_predictry>
+                </observers>
+            </catalog_product_save_after>
+
+            <!-- delete the product on the server when product deleted -->
+            <catalog_product_delete_after>
+                <observers>
+                    <vventures_predictry>
+                        <!-- the model to be instantiated -->
+                        <class>vventures_predictry/observer</class>
+                        <!-- the method of the class to be called -->
+                        <method>deleteItem</method>
+                        <!-- The type of class to instantiate -->
+                        <type>singleton</type>
+                    </vventures_predictry>
+                </observers>
+            </catalog_product_delete_after>
+
+        </events>
+    </global>
+
+    <!-- frontend -->
+    <frontend>
+        <layout>
+            <updates>
+                <vventures_predictry>
+                    <file>vventures_predictry.xml</file>
+                </vventures_predictry>
+            </updates>
+        </layout>
+        <events>
+            <!-- this hook will be trigger before actions -->
+            <controller_action_predispatch>
+                <observers>
+                    <controller_action_before>
+                        <!-- the model to be instantiated -->
+                        <class>vventures_predictry/observer</class>
+                        <!-- the method of the class to be called -->
+                        <method>controllerActionBefore</method>
+                        <!-- The type of class to instantiate -->
+                        <type>singleton</type>
+                    </controller_action_before>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+    </frontend>
+    <!-- end of frontend -->
+
+    <!-- ADMIN MODULE CONFIG DEFAULT VALUES -->
+    <default>
+        <vventures_predictry>
+            <vventures_predictry_basic>
+                <enabled>1</enabled>
+                <hostname></hostname>
+            </vventures_predictry_basic>
+            <vventures_predictry_advance>
+                <tenant_id></tenant_id>
+                <api_key></api_key>
+            </vventures_predictry_advance>
+        </vventures_predictry>
+    </default>
+    <!-- END OF ADMIN MODULE CONFIG DEFAULT VALUES -->
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <vventures_predictry>
+                                            <title>Predictry</title>
+                                        </vventures_predictry>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+</config>

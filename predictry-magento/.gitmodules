@@ -1,0 +1,12 @@
+[submodule "data/magento2"]
+	path = data/magento2
+	url = https://github.com/magento/magento2
+[submodule "puppet_modules/composer"]
+	path = puppet_modules/composer
+	url = git://github.com/willdurand/puppet-composer.git
+[submodule "puppet_modules/wget"]
+	path = puppet_modules/wget
+	url = git://github.com/maestrodev/puppet-wget.git
+[submodule "data/webgrind"]
+	path = data/webgrind
+	url = git://github.com/jokkedk/webgrind.git

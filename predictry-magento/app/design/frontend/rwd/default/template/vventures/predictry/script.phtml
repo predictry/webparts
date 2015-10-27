@@ -1,0 +1,61 @@
+<?php
+/**
+ * Predictry Module for Magento
+ *
+ * @package     VVentures_Predictry
+ * @author      Verve Technologies Sdn Bhd
+ * @copyright   Copyright (c) 2014 Predictry (http://www.predictry.com/)
+ * @license     Unknown
+ * @developer	rifkiyandhi@gmail.com
+ */
+?>
+
+<?php if ($this->getConfig('enabled')) : ?>
+  <script type="text/javascript">
+      var _predictry = _predictry || [];
+      (function() {
+          _predictry.push(['setTenantId', "<?php echo $this->getConfig('tenant_id'); ?>"], ['setApiKey', "<?php echo $this->getConfig('api_key'); ?>"]);
+          var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+          g.type = 'text/javascript';
+          g.defer = true;
+          g.async = true;
+          g.src = '//d2gq0qsnoi5tbv.cloudfront.net/latest/p.min.js';
+          s.parentNode.insertBefore(g, s);
+      })();
+  </script>
+  
+  <style>
+		/* Predictry Minimum Style */
+		.predictry-box.box-recommendation{
+			clear: both;
+			margin-top: 20px;
+/*			padding-top: 15px;
+			border-top: 1px solid #ededed;*/
+		}
+		.predictry-box.box-recommendation > h2{
+			margin-bottom: 10px;
+		}
+
+		.predictry-box > ul{
+			width: 100%;
+		}
+		.predictry-box > ul > li{
+			width: 23%;
+			text-align: center;
+			margin-right: 2%;
+		}
+
+		.predictry-box > ul > li > a {
+			position: relative;
+			display: block;
+		}
+
+		.predictry-box > ul > li > a > img{
+			border: 1px solid #ededed;
+		}
+		.predictry-box > ul > li > h3{
+			margin-top: 10px;
+		}
+
+	</style>
+<?php endif; ?>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Getting Recommendation</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h2 id="js-sdk-implementation-document-for-predictry-recommendation-engine">JS SDK Implementation Document For Predictry Recommendation Engine</h2>
+
+
+
+<h3 id="part-2-getting-recommendation">Part 2: (Getting Recommendation)</h3>
+
+<h3 id="version-023">Version 0.2.3</h3>
+
+<hr>
+
+<p>Place the code below on any part of the site that you want the recommendation to be appearing. The code below will generate simple list elements that will be append on DOM.</p>
+
+<p>Noted: You have to first place predictry Embed JS code on . Refer to send actions documentation.</p>
+
+<h3 id="step-1-display-recommendations"><em>STEP 1</em>: Display recommendations</h3>
+
+
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-subst">&lt;</span>ins class<span class="hljs-subst">=</span><span class="hljs-string">"predictry"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-widget</span><span class="hljs-attribute">-id</span><span class="hljs-subst">=</span><span class="hljs-string">"{$WIDGET_ID}"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-user</span><span class="hljs-attribute">-id</span><span class="hljs-subst">=</span><span class="hljs-string">"{$USER_ID}"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-item</span><span class="hljs-attribute">-id</span><span class="hljs-subst">=</span><span class="hljs-string">"{$ITEM_ID}"</span><span class="hljs-subst">&gt;&lt;</span>/ins<span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>script <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text/javascript"</span><span class="hljs-subst">&gt;</span>_predictry<span class="hljs-built_in">.</span>push(<span class="hljs-preprocessor">[</span><span class="hljs-string">'getWidget'</span><span class="hljs-preprocessor">]</span><span class="hljs-markup">);&lt;/script&gt;</span></code></pre>
+
+
+
+<h3 id="step-2-get-recommendations-in-json"><em>STEP 2</em>: Get Recommendations in JSON</h3>
+
+
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-subst">&lt;</span>script <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text/javascript"</span><span class="hljs-subst">&gt;</span>
+    function testCallback(response) {
+        console<span class="hljs-built_in">.</span><span class="hljs-keyword">log</span>(response);
+    }
+<span class="hljs-subst">&lt;</span>/script<span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>ins class<span class="hljs-subst">=</span><span class="hljs-string">"predictry"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-widget</span><span class="hljs-attribute">-id</span><span class="hljs-subst">=</span><span class="hljs-string">"{WIDGET_ID}"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-user</span><span class="hljs-attribute">-id</span><span class="hljs-subst">=</span><span class="hljs-string">"{USER_ID}"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-item</span><span class="hljs-attribute">-id</span><span class="hljs-subst">=</span><span class="hljs-string">"{ITEM_ID}"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-callback</span><span class="hljs-subst">=</span><span class="hljs-string">"testCallback"</span><span class="hljs-subst">&gt;&lt;</span>/ins<span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>script <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text/javascript"</span><span class="hljs-subst">&gt;</span>_predictry<span class="hljs-built_in">.</span>push(<span class="hljs-preprocessor">[</span><span class="hljs-string">'getWidget'</span><span class="hljs-preprocessor">]</span><span class="hljs-markup">);&lt;/script&gt;</span></code></pre>
+
+
+
+<h4 id="sample-response">Sample Response</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs json">{
+  "<span class="hljs-attribute">status</span>":<span class="hljs-value"><span class="hljs-number">200</span></span>,
+  "<span class="hljs-attribute">data</span>":<span class="hljs-value">{
+    "<span class="hljs-attribute">items</span>":<span class="hljs-value">[
+      {
+        "<span class="hljs-attribute">id</span>":<span class="hljs-value"><span class="hljs-string">"6014"</span></span>,
+        "<span class="hljs-attribute">name</span>":<span class="hljs-value"><span class="hljs-string">"Kodomo Baby Shampoo "</span></span>,
+        "<span class="hljs-attribute">item_url</span>":<span class="hljs-value"><span class="hljs-string">" predictry.com /product/kodomo-baby-shampoo"</span></span>,
+        "<span class="hljs-attribute">img_url</span>":<span class="hljs-value"><span class="hljs-string">"// predictry.com /150x/i/m/img_7091.jpg"</span></span>,
+        "<span class="hljs-attribute">price</span>":<span class="hljs-value"><span class="hljs-string">"7.6"</span>
+      </span>},
+      {
+        "<span class="hljs-attribute">id</span>":<span class="hljs-value"><span class="hljs-string">"5864"</span></span>,
+        "<span class="hljs-attribute">name</span>":<span class="hljs-value"><span class="hljs-string">"Pokka Jasmine Green Tea "</span></span>,
+        "<span class="hljs-attribute">item_url</span>":<span class="hljs-value"><span class="hljs-string">"predictry.com/product/pokka-jasmine-green-tea"</span></span>,
+        "<span class="hljs-attribute">img_url</span>":<span class="hljs-value"><span class="hljs-string">"// predictry.com /150x/i/m/img_6986.jpg"</span></span>,
+        "<span class="hljs-attribute">price</span>":<span class="hljs-value"><span class="hljs-string">"4.05"</span>
+      </span>}
+    ]
+  </span>}</span>,
+    "<span class="hljs-attribute">widget_instance_id</span>": <span class="hljs-value"><span class="hljs-number">50</span>
+</span>}</code></pre>
+
+<p>Both {ITEM_ID} and {USER_ID} are optional for some algorithms. </p>
+
+<h4 id="important"><strong>IMPORTANT</strong></h4>
+
+<p><strong>When you retrieving as JSON data and display the recommendation on your own, you need to append query string p_src={WIDGET_INSTANCE_ID} &amp;p_id={ITEM_ID}  on the item URL.</strong></p>
+
+<p>FAQ:</p>
+
+<p>Q: Can I have multiple widgets on the same page? <br>
+A: Yes you can.</p>
+
+<p>Q: Can I have my own css style of the recommendation lists? <br>
+A: Yes, of course. Basic displays of recommendation will be normal list that is using basic <code>&lt;ul&gt;</code> wrapped with <code>&lt;ins class='predictry'&gt;&lt;/ins&gt;</code>. If you need more advance styling / layout, you can get recommendation in JSON by using callback function to handle the response.</p></div></body>
+</html>

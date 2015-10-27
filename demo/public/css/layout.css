@@ -1,0 +1,137 @@
+/* 
+    Created on  : Mar 12, 2014, 9:35:16 PM
+    Author      : Rifki Yandhi
+    Website     : http://www.rifkiyandhi.com
+    File        : layout.css
+*/
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
+
+/* Body
+================================================== */
+
+body {
+    background-color: #FFFFFF;
+    margin-top: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Product Detail
+================================================== */
+
+.product-thumbs li{
+    margin-bottom: 10px;
+}
+
+.product-title > h1 {
+    margin-top: 0;
+}
+
+.box-heading > h3 {
+    border: 1px #CCC solid;
+    border-radius: 20px;
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Breadcrumb
+================================================== */
+ol.breadcrumb{
+    display: inline-block;
+    border: 1px #CCC solid;
+    border-radius: 20px;
+    background-color: #FFF;
+    font-size: 12px;
+}
+
+ol.breadcrumb > li:first-child{
+    margin-left: 10px;
+}
+
+ol.breadcrumb > li:last-child{
+    margin-right: 10px;
+}
+
+/* Product Detail
+================================================== */
+.product-list {
+    margin-top: 10px;
+}
+
+.product-list a > img{
+    border-radius: 8px;
+}
+
+.product-list .description h4{
+    color: #333333;
+    font-size: 1.2em;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.product-list .description a:hover{
+    text-decoration: none;
+}
+
+.product-list .price h5{
+    color: #444444;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.product-list .controls button.add-to-cart{
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    -moz-user-select: none;
+    border-image: none;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 0 0 1px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: #EE4054;
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #C21126;
+    color: #FFFFFF;
+}
+
+.product-list div.column{
+    border-right: 1px solid #CCC;
+    margin-bottom: 40px;
+
+}
+.product-list > div.row > div.column:nth-child(6), .product-list > div.row > div.column:nth-child(12){
+    border-right: 0;
+}
+
+/* Pagination
+================================================== */
+.pagination{
+    margin-top: 0;
+}
+
+.pagination .active a{
+    background-color: #CCC;
+    border: 1px solid #999;
+    color: #333;
+}
+
+/* Footer 
+================================================== */
+div.footer{
+    margin-top: 20px;
+}
+
+#recommendation_spinner1,#recommendation_spinner2,
+#recommendation_spinner3,#recommendation_spinner4,
+#recommendation_spinner5{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 36px;
+}

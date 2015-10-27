@@ -1,0 +1,21 @@
+<?php
+/**
+ * Predictry Module for Magento
+ *
+ * @package     VVentures_Predictry
+ * @author      Verve Technologies Sdn Bhd
+ * @copyright   Copyright (c) 2014 Predictry (http://www.predictry.com/)
+ * @license     Unknown
+ * @developer	rifkiyandhi@gmail.com
+ */
+?>
+<?php if (Mage::helper("vventures_predictry")->getEnabled()) : ?>
+	<script type="text/javascript">
+		<?php echo $this->getActionData(); ?>
+	</script>
+	<?php
+	Mage::getModel('core/session')->unsProductToShoppingCart();
+	Mage::getSingleton('core/session')->unsetData('predictry_action_name');
+	Mage::getSingleton('core/session')->unsetData('predictry_recent_viewed_product_id');
+	Mage::getSingleton('core/session')->unsetData('predictry_recent_order_id');
+endif;

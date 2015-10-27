@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <vventures_predictry>
+            <label>Predictry</label>
+            <sort_order>101</sort_order>
+        </vventures_predictry>       
+    </tabs>
+    <sections>
+        <vventures_predictry translate="label" module="vventures_predictry">
+            <label>Predictry Recommendation</label>
+            <tab>vventures_predictry</tab>
+            <sort_order>1001</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <vventures_predictry_basic translate="label" module="vventures_predictry">
+                    <label>Basic Predictry Setup</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable Module:</label>
+                            <comment>Enable or disable the Predictry module.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <hostname translate="label">
+                            <label>Hostname</label>
+                            <comment>Enter hostname to track (ie: example.com).</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </hostname>
+                    </fields>
+                </vventures_predictry_basic>
+                <vventures_predictry_advance translate="label" module="vventures_predictry">
+                    <label>Tenant ID &amp; API Key Setup</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>11</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <tenant_id translate="label">
+                            <label>Tenant ID:</label>
+                            <comment>Enter Tenant ID.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tenant_id>
+                        <api_key translate="label">
+                            <label>API Key:</label>
+                            <comment>Enter API Key (get it from dashboard.predictry.com).</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </api_key>
+                    </fields>
+                </vventures_predictry_advance>
+            </groups>
+        </vventures_predictry>
+    </sections>
+</config>

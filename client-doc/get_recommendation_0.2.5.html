@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Get Recommendation</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h2 id="js-sdk-implementation-document-for-predictry-recommendation-engine">JS SDK Implementation Document For Predictry Recommendation Engine</h2>
+
+
+
+<h3 id="part-2-getting-recommendation">Part 2: (Getting Recommendation)</h3>
+
+
+
+<h3 id="version-025">Version 0.2.5</h3>
+
+<hr>
+
+
+
+<h3 id="step-1-getting-started-embed-js"><em>STEP 1</em>: GETTING STARTED (EMBED JS)</h3>
+
+<p>To be able to pull recommendation with the Predictry JavaScript library, just paste the following code into the page you want the recommendation to be displayed just before the <code>&lt;/head&gt;</code> tags. Make sure to change <strong><em>‘YOUR_API_KEY’</em></strong> and <strong><em>‘YOUR_TENANT_ID’</em></strong> accordingly that have been provided to you. </p>
+
+<p>This snippet of code will load our library asynchronously on your page which doesn’t slow down the loading time of you page</p>
+
+<p>We create a variable called _predictry that will be available on any pages. You will use it to send any data to us.</p>
+
+<p>Note: You need to include this on every page of your website.</p>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs ">&lt;script type=<span class="hljs-string">"text/javascript"</span>&gt;
+    <span class="hljs-keyword">var</span> _predictry = _predictry || [];
+    (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        _predictry.push([<span class="hljs-string">'setTenantId'</span>, <span class="hljs-string">"YOUR_TENANT_ID"</span>], [<span class="hljs-string">'setApiKey'</span>, <span class="hljs-string">"YOUR_API_KEY"</span>]);
+        <span class="hljs-keyword">var</span> d = document, g = d.createElement(<span class="hljs-string">'script'</span>), s = d.getElementsByTagName(<span class="hljs-string">'script'</span>)[<span class="hljs-number">0</span>];
+        g.type = <span class="hljs-string">'text/javascript'</span>;
+        g.defer = <span class="hljs-literal">true</span>;
+        g.async = <span class="hljs-literal">true</span>;
+        g.src = <span class="hljs-string">'//d2gq0qsnoi5tbv.cloudfront.net/v3/p.min.js'</span>;
+        s.parentNode.insertBefore(g, s);
+    })();
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</span></code></pre>
+
+<p>If you prefer you can opt for a minified version</p>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> _predictry=_predictry||[];(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>_predictry.push([<span class="hljs-string">"setTenantId"</span>,<span class="hljs-string">"YOUR_TENANT_ID"</span>],[<span class="hljs-string">"setApiKey"</span>,<span class="hljs-string">"YOUR_API_KEY"</span>]);<span class="hljs-keyword">var</span> e=document,c=e.createElement(<span class="hljs-string">"script"</span>),b=e.getElementsByTagName(<span class="hljs-string">"script"</span>)[<span class="hljs-number">0</span>];c.type=<span class="hljs-string">"text/javascript"</span>;c.defer=<span class="hljs-literal">true</span>;c.async=<span class="hljs-literal">true</span>;c.src=<span class="hljs-string">"//d2gq0qsnoi5tbv.cloudfront.net/v3/p.min.js"</span>;b.parentNode.insertBefore(c,b)})();</code></pre>
+
+<h3 id="step-2-display-recommendations"><em>Step 2</em>: Display recommendations</h3>
+
+<p>Place the code below on any part of the site that you want the recommendation to be appearing. The code below will generate simple list elements that will be append on DOM.</p>
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-subst">&lt;</span>ins class<span class="hljs-subst">=</span><span class="hljs-string">"predictry"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-item</span><span class="hljs-attribute">-id</span><span class="hljs-subst">=</span><span class="hljs-string">"{$ITEM_ID}"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-currency</span><span class="hljs-subst">=</span><span class="hljs-string">"{$CURRENCY}"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-limit</span><span class="hljs-subst">=</span><span class="hljs-string">"{$LIMIT}"</span><span class="hljs-subst">&gt;&lt;</span>/ins<span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>script <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text/javascript"</span><span class="hljs-subst">&gt;</span>_predictry<span class="hljs-built_in">.</span>push(<span class="hljs-preprocessor">[</span><span class="hljs-string">'getWidget'</span><span class="hljs-preprocessor">]</span><span class="hljs-markup">);&lt;/script&gt;</span></code></pre>
+
+<ol>
+<li><p>{$ITEM_ID} <br>
+Current  viewed item identifier.</p></li>
+<li><p>{$CURRENCY} <br>
+Price currency. <strong>ie. USD, RM, IDR / Rp.</strong></p></li>
+<li><p>{$LIMIT} <br>
+Number of recommended items displayed <strong>ie. 6</strong>.</p></li>
+</ol>
+
+<h3 id="step-3-add-styling"><em>Step 3</em>: Add Styling</h3>
+
+<p>Recommendation widget styling.</p>
+
+<pre class="prettyprint"><code class=" hljs rust">&lt;link media=<span class="hljs-string">"all"</span> <span class="hljs-keyword">type</span>=<span class="hljs-string">"text/css"</span> rel=<span class="hljs-string">"stylesheet"</span> href=<span class="hljs-string">"https://d2gq0qsnoi5tbv.cloudfront.net/assets/p.min.css?v=0.1.0"</span>/&gt;</code></pre>
+
+<p>Sample basic CSS styling.</p>
+
+<p><img src="https://d2gq0qsnoi5tbv.cloudfront.net/assets/reco_sample.png" alt="enter image description here" title=""></p>
+
+<p>If you want to customize the styling. Make the CSS changes of the structure as per below in your CSS file.</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs avrasm">ul<span class="hljs-preprocessor">.pry</span>-content
+    li<span class="hljs-preprocessor">.pry</span>-column //for each item
+        div<span class="hljs-preprocessor">.pry</span>-item-wrapper
+            div<span class="hljs-preprocessor">.pry</span>-humb
+                a &gt; img
+            div<span class="hljs-preprocessor">.pry</span>-desc
+                a &gt; span<span class="hljs-preprocessor">.name</span>
+            div<span class="hljs-preprocessor">.pry</span>-price
+                span<span class="hljs-preprocessor">.priceCurrency</span>
+                span<span class="hljs-preprocessor">.price</span></code></pre>
+
+<p>FAQ:</p>
+
+<p>Q: Can I have multiple widgets on the same page? <br>
+A: Yes you can. Place <code>&lt;script type="text/javascript"&gt;_predictry.push(['getWidget']);&lt;/script&gt;</code> at the bottom of the last recommendation <code>&lt;ins&gt;</code> tag. </p>
+
+<p>Sample:</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-subst">&lt;</span>ins class<span class="hljs-subst">=</span><span class="hljs-string">"predictry"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-item</span><span class="hljs-attribute">-id</span><span class="hljs-subst">=</span><span class="hljs-string">"10"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-currency</span><span class="hljs-subst">=</span><span class="hljs-string">"USD"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-limit</span><span class="hljs-subst">=</span><span class="hljs-string">"6"</span><span class="hljs-subst">&gt;&lt;</span>/ins<span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>ins class<span class="hljs-subst">=</span><span class="hljs-string">"predictry"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-item</span><span class="hljs-attribute">-id</span><span class="hljs-subst">=</span><span class="hljs-string">"{$ITEM_ID}"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-currency</span><span class="hljs-subst">=</span><span class="hljs-string">"USD"</span> <span class="hljs-built_in">data</span><span class="hljs-attribute">-predictry</span><span class="hljs-attribute">-limit</span><span class="hljs-subst">=</span><span class="hljs-string">"6"</span><span class="hljs-subst">&gt;&lt;</span>/ins<span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>script <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text/javascript"</span><span class="hljs-subst">&gt;</span>_predictry<span class="hljs-built_in">.</span>push(<span class="hljs-preprocessor">[</span><span class="hljs-string">'getWidget'</span><span class="hljs-preprocessor">]</span><span class="hljs-markup">);&lt;/script&gt;</span></code></pre>
+
+<p>Q: Can I have my own css style of the recommendation lists? <br>
+A: Yes, of course, please refer to <strong><em>Step 3</em></strong> Add Styling.</p>
+
+
+
+<h2 id="changelog">Changelog</h2>
+
+<ul>
+<li>0.2.5 <br>
+<ul><li>Update pulling recommendation</li>
+<li>Update tracking on recommended results</li></ul></li>
+<li>0.2.4 <br>
+<ul><li>Track by using small gif image</li></ul></li>
+<li>0.2.3 <br>
+<ul><li>Add more algorithms on the engine.</li>
+<li>Ability to accept custom action track.</li>
+<li>Improvement on data format.</li>
+<li>Improve filter dashboard configuration.</li></ul></li>
+<li>0.2.2 <br>
+<ul><li>Add more actions (add_to_cart, started_checkout)</li></ul></li>
+<li><p>0.2.1</p>
+
+<ul><li>Revamp the class</li>
+<li>Asynchronous</li>
+<li>Added one global function to track.</li>
+<li>Revamp the data format.</li></ul></li>
+<li><p>0.1.0</p>
+
+<ul><li>Initial</li>
+<li>Alpha Release</li></ul></li>
+</ul>
+
+<blockquote>
+  <p>Any questions, please contact <a href="rifki@predictry.com">rifki@predictry.com</a></p>
+</blockquote></div></body>
+</html>

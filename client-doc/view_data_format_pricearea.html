@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>view_data_format_pricearea</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h4 id="1-catalog-page">1. CATALOG PAGE</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">var</span> view_data = {
+    <span class="hljs-attribute">action</span>: {
+        <span class="hljs-attribute">name</span>: <span class="hljs-string">"view"</span>
+    },
+    <span class="hljs-regexp">//</span> If user <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> logged <span class="hljs-keyword">in</span>, <span class="hljs-keyword">this</span> object <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> required
+    <span class="hljs-attribute">user</span>: {
+        <span class="hljs-attribute">user_id</span>: <span class="hljs-string">"100"</span>, <span class="hljs-regexp">//</span> identifier <span class="hljs-keyword">of</span> user
+        <span class="hljs-attribute">email</span>: <span class="hljs-string">"user@email.com"</span>
+    },
+    <span class="hljs-attribute">items</span>: [
+        {
+            <span class="hljs-attribute">item_id</span>: <span class="hljs-string">"2300"</span>, <span class="hljs-regexp">//</span>alphanumeric (unique)
+            <span class="hljs-attribute">type</span>: <span class="hljs-string">'product'</span>,
+            <span class="hljs-attribute">name</span>: <span class="hljs-string">"Item name"</span>,
+            <span class="hljs-attribute">price</span>: <span class="hljs-number">1.800</span><span class="hljs-number">.000</span>, <span class="hljs-regexp">//</span>the cheapest price from the list <span class="hljs-keyword">of</span> stores
+            <span class="hljs-attribute">currency</span>: <span class="hljs-string">'IDR'</span>,
+            <span class="hljs-attribute">img_url</span>: <span class="hljs-string">"http://www.predictry.com/123.png"</span>,
+            <span class="hljs-attribute">item_url</span>: <span class="hljs-string">"http://www.predictry.com/123"</span>, <span class="hljs-regexp">//</span>without trailing slash
+
+            <span class="hljs-regexp">//</span>OPTIONALS - Provide <span class="hljs-keyword">if</span> available so that recommendations would be better
+            <span class="hljs-attribute">discount</span>: <span class="hljs-string">"23%"</span>, <span class="hljs-regexp">//</span>the discount that <span class="hljs-keyword">is</span> being offered. If the discount <span class="hljs-keyword">is</span> <span class="hljs-keyword">in</span> amount <span class="hljs-number">23.10</span> without the percentage
+            <span class="hljs-attribute">description</span>: <span class="hljs-string">"Description of the item"</span>,
+            <span class="hljs-attribute">inventory_qty</span>: <span class="hljs-number">100</span>, <span class="hljs-regexp">//</span>how many items left
+            <span class="hljs-attribute">category</span>: <span class="hljs-string">"Electronics"</span>,
+            <span class="hljs-attribute">sub_category</span>: [<span class="hljs-string">"Accessories"</span>, <span class="hljs-string">"Watches"</span>], <span class="hljs-regexp">//</span> Electronics &gt; Accessories &gt; Watches
+            <span class="hljs-attribute">tags</span>: [<span class="hljs-string">"iphone"</span>, <span class="hljs-string">"5s"</span>, <span class="hljs-string">"gold"</span>], <span class="hljs-regexp">//</span><span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> an array. If there <span class="hljs-keyword">is</span> only one item also enclosed <span class="hljs-keyword">in</span> array [<span class="hljs-string">"iphone"</span>]
+            <span class="hljs-attribute">locations</span>: {
+                <span class="hljs-attribute">country</span>: <span class="hljs-string">"Indonesia"</span>, <span class="hljs-regexp">//</span>location country <span class="hljs-keyword">of</span> the store
+                <span class="hljs-attribute">city</span>: <span class="hljs-string">"Jakarta"</span> <span class="hljs-regexp">//</span>location city <span class="hljs-keyword">of</span> the store
+            }, <span class="hljs-regexp">//</span>locations that <span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> sold <span class="hljs-keyword">if</span> applicable
+
+        }
+    ]
+};
+
+_predictry.push([<span class="hljs-string">'track'</span>, view_data]);</code></pre>
+
+
+
+<h4 id="2-promo-detail-page">2. PROMO DETAIL PAGE</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">var</span> view_data = {
+    <span class="hljs-attribute">action</span>: {
+        <span class="hljs-attribute">name</span>: <span class="hljs-string">"view"</span>
+    },
+    <span class="hljs-regexp">//</span> If user <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> logged <span class="hljs-keyword">in</span>, <span class="hljs-keyword">this</span> object <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> required
+    <span class="hljs-attribute">user</span>: {
+        <span class="hljs-attribute">user_id</span>: <span class="hljs-string">"100"</span>, <span class="hljs-regexp">//</span> identifier <span class="hljs-keyword">of</span> user
+        <span class="hljs-attribute">email</span>: <span class="hljs-string">"user@email.com"</span>
+    },
+    <span class="hljs-attribute">items</span>: [
+        {
+            <span class="hljs-attribute">item_id</span>: <span class="hljs-string">"2300"</span>, <span class="hljs-regexp">//</span>alphanumeric (unique)
+            <span class="hljs-attribute">type</span>: <span class="hljs-string">'promo'</span>,
+            <span class="hljs-attribute">name</span>: <span class="hljs-string">"Leather Man Bag Man Messenger Bag Cross Bag CD376"</span>,
+            <span class="hljs-attribute">price</span>: <span class="hljs-number">1.800</span><span class="hljs-number">.000</span>, <span class="hljs-regexp">//</span>price after discount
+            <span class="hljs-attribute">currency</span>: <span class="hljs-string">'IDR'</span>,
+            <span class="hljs-attribute">img_url</span>: <span class="hljs-string">"http://www.predictry.com/123.png"</span>,
+            <span class="hljs-attribute">item_url</span>: <span class="hljs-string">"http://www.predictry.com/123"</span>, <span class="hljs-regexp">//</span>without trailing slash
+            <span class="hljs-attribute">discount</span>: <span class="hljs-string">"23%"</span>, <span class="hljs-regexp">//</span>the discount that <span class="hljs-keyword">is</span> being offered. If the discount <span class="hljs-keyword">is</span> <span class="hljs-keyword">in</span> amount <span class="hljs-number">23.10</span> without the percentage
+
+            <span class="hljs-regexp">//</span>PROMO INFORMATION
+            <span class="hljs-attribute">start_date</span>: <span class="hljs-number">1407921883</span>, <span class="hljs-regexp">//</span>unix timestamp - <span class="hljs-keyword">when</span> <span class="hljs-keyword">is</span> the first that <span class="hljs-keyword">this</span> will be sold? If applicable, <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span>, ignore.
+            <span class="hljs-attribute">end_date</span>: <span class="hljs-number">1417921883</span>, <span class="hljs-regexp">//</span>unix timestamp - <span class="hljs-keyword">when</span> <span class="hljs-keyword">is</span> the last day that it will be sold? If applicable, <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span>, ignore.
+
+            <span class="hljs-regexp">//</span>OPTIONALS - Provide <span class="hljs-keyword">if</span> available so that recommendations would be better
+            <span class="hljs-attribute">description</span>: <span class="hljs-string">"Description of the item"</span>,
+            <span class="hljs-attribute">inventory_qty</span>: <span class="hljs-number">100</span>, <span class="hljs-regexp">//</span>how many items left
+            <span class="hljs-attribute">category</span>: <span class="hljs-string">"Electronics"</span>,
+            <span class="hljs-attribute">sub_category</span>: <span class="hljs-string">"Phone"</span>,
+            <span class="hljs-attribute">tags</span>: [<span class="hljs-string">"iphone"</span>, <span class="hljs-string">"5s"</span>, <span class="hljs-string">"gold"</span>], <span class="hljs-regexp">//</span><span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> an array. If there <span class="hljs-keyword">is</span> only one item also enclosed <span class="hljs-keyword">in</span> array [<span class="hljs-string">"iphone"</span>]
+            <span class="hljs-attribute">locations</span>: {
+                <span class="hljs-attribute">country</span>: <span class="hljs-string">"Indonesia"</span>, <span class="hljs-regexp">//</span>location country <span class="hljs-keyword">of</span> the store
+                <span class="hljs-attribute">city</span>: <span class="hljs-string">"Jakarta"</span> <span class="hljs-regexp">//</span>location city <span class="hljs-keyword">of</span> the store
+            }, <span class="hljs-regexp">//</span>locations that <span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> sold <span class="hljs-keyword">if</span> applicable
+
+            <span class="hljs-regexp">//</span>STORE INFORMATION
+            <span class="hljs-attribute">store_id</span>: <span class="hljs-string">'123'</span>,
+            <span class="hljs-attribute">store_name</span>: <span class="hljs-string">'Elevenia'</span>,
+            <span class="hljs-attribute">store_url</span>: <span class="hljs-string">'http://www.elevenia.co.id'</span>
+        }
+    ]
+};
+
+_predictry.push([<span class="hljs-string">'track'</span>, view_data]);</code></pre>
+
+<blockquote>
+  <p>Any questions, please contact <a href="rifki@predictry.com">rifki@predictry.com</a></p>
+</blockquote></div></body>
+</html>

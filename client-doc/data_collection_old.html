@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Data Collection</title>
+<link rel="stylesheet" href="https://stackedit.io/res-min/themes/base.css" />
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body><div class="container"><h2 id="js-sdk-implementation-document-for-predictry-recommendation-engine">JS SDK Implementation Document For Predictry Recommendation Engine</h2>
+
+
+
+<h3 id="part-1-sending-actions">Part 1: (Sending Actions)</h3>
+
+
+
+<h3 id="version-024">Version 0.2.4</h3>
+
+<hr>
+
+
+
+<h3 id="step-1-getting-started-embed-js"><em>STEP 1</em>: GETTING STARTED (EMBED JS)</h3>
+
+<p>To start tracking with the Predictry JavaScript library, just paste the following code into the page you want to track just before the <code>&lt;/head&gt;</code> tags. Make sure to change <strong><em>‘YOUR_API_KEY’</em></strong> and <strong><em>‘YOUR_TENANT_ID’</em></strong> accordingly that have been provided to you. </p>
+
+<p>This snippet of code will load our library asynchronously on your page which doesn’t slow down the loading time of you page</p>
+
+<p>We create a variable called _predictry that will be available on any pages. You will use it to send any data to us.</p>
+
+<p>Note: You need to include this on every page of your website.</p>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs ">&lt;script type=<span class="hljs-string">"text/javascript"</span>&gt;
+    <span class="hljs-keyword">var</span> _predictry = _predictry || [];
+    (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        _predictry.push([<span class="hljs-string">'setTenantId'</span>, <span class="hljs-string">"YOUR_TENANT_ID"</span>], [<span class="hljs-string">'setApiKey'</span>, <span class="hljs-string">"YOUR_API_KEY"</span>]);
+        <span class="hljs-keyword">var</span> d = document, g = d.createElement(<span class="hljs-string">'script'</span>), s = d.getElementsByTagName(<span class="hljs-string">'script'</span>)[<span class="hljs-number">0</span>];
+        g.type = <span class="hljs-string">'text/javascript'</span>;
+        g.defer = <span class="hljs-literal">true</span>;
+        g.async = <span class="hljs-literal">true</span>;
+        g.src = <span class="hljs-string">'//d2gq0qsnoi5tbv.cloudfront.net/v3/p.min.js'</span>;
+        s.parentNode.insertBefore(g, s);
+    })();
+<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+</span></code></pre>
+
+<p>If you prefer you can opt for a minified version</p>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> _predictry=_predictry||[];(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>_predictry.push([<span class="hljs-string">"setTenantId"</span>,<span class="hljs-string">"YOUR_TENANT_ID"</span>],[<span class="hljs-string">"setApiKey"</span>,<span class="hljs-string">"YOUR_API_KEY"</span>]);<span class="hljs-keyword">var</span> e=document,c=e.createElement(<span class="hljs-string">"script"</span>),b=e.getElementsByTagName(<span class="hljs-string">"script"</span>)[<span class="hljs-number">0</span>];c.type=<span class="hljs-string">"text/javascript"</span>;c.defer=<span class="hljs-literal">true</span>;c.async=<span class="hljs-literal">true</span>;c.src=<span class="hljs-string">"//d2gq0qsnoi5tbv.cloudfront.net/v3/p.min.js"</span>;b.parentNode.insertBefore(c,b)})();</code></pre>
+
+
+
+<h3 id="step-2-track-view"><em>STEP 2</em>: TRACK VIEW</h3>
+
+<p>On every product/item page that you would like to track, include this also.</p>
+
+
+
+<h4 id="product-page">Product page</h4>
+
+
+
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">var</span> view_data = {
+    <span class="hljs-attribute">action</span>: {
+        <span class="hljs-attribute">name</span>: <span class="hljs-string">"view"</span>
+    },
+    <span class="hljs-regexp">//</span> If user <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> logged <span class="hljs-keyword">in</span>, <span class="hljs-keyword">this</span> object <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> required
+    <span class="hljs-attribute">user</span>: {
+        <span class="hljs-attribute">user_id</span>: <span class="hljs-string">"100"</span>, <span class="hljs-regexp">//</span> identifier <span class="hljs-keyword">of</span> user
+        <span class="hljs-attribute">email</span>: <span class="hljs-string">"user@email.com"</span> <span class="hljs-regexp">//</span> optional
+    },
+    <span class="hljs-attribute">items</span>: [
+        {
+            <span class="hljs-attribute">item_id</span>: <span class="hljs-string">"2300"</span>, <span class="hljs-regexp">//</span>alphanumeric (unique)
+            <span class="hljs-attribute">name</span>: <span class="hljs-string">"Item name"</span>,
+            <span class="hljs-attribute">price</span>: <span class="hljs-number">250.12</span>,
+            <span class="hljs-attribute">img_url</span>: <span class="hljs-string">"http://www.predictry.com/123.png"</span>,
+            <span class="hljs-attribute">item_url</span>: <span class="hljs-string">"http://www.predictry.com/123"</span>, <span class="hljs-regexp">//</span>without trailing slash
+
+            <span class="hljs-regexp">//</span>OPTIONALS - Provide <span class="hljs-keyword">if</span> available so that recommendations would be better
+           <span class="hljs-attribute">discount</span>: <span class="hljs-string">"23%"</span>, <span class="hljs-regexp">//</span>the discount that <span class="hljs-keyword">is</span> being offered. If the discount <span class="hljs-keyword">is</span> <span class="hljs-keyword">in</span> amount <span class="hljs-number">23.10</span> without the percentage
+            <span class="hljs-attribute">description</span>: <span class="hljs-string">"Description of the item"</span>,
+            <span class="hljs-attribute">inventory_qty</span>: <span class="hljs-number">100</span>, <span class="hljs-regexp">//</span>how many items left
+            <span class="hljs-attribute">category</span>: <span class="hljs-string">"Electronics"</span>,
+            <span class="hljs-attribute">sub_category</span>: [<span class="hljs-string">"Accessories"</span>, <span class="hljs-string">"Watches"</span>], <span class="hljs-regexp">//</span> Electronics &gt; Accessories &gt; Watches
+            <span class="hljs-attribute">tags</span>: [<span class="hljs-string">"iphone"</span>, <span class="hljs-string">"5s"</span>, <span class="hljs-string">"gold"</span>], <span class="hljs-regexp">//</span><span class="hljs-keyword">this</span> <span class="hljs-keyword">is</span> an array. If there <span class="hljs-keyword">is</span> only one item also enclosed <span class="hljs-keyword">in</span> array [<span class="hljs-string">"iphone"</span>] 
+            <span class="hljs-attribute">brand</span>: <span class="hljs-string">"apple"</span>
+        }
+    ]
+};
+
+_predictry.push([<span class="hljs-string">'track'</span>, view_data]);</code></pre>
+
+
+
+<h3 id="step-3-track-add-to-cart"><em>STEP 3</em>: TRACK ADD TO CART</h3>
+
+<p>To track add to cart action, you can include this on add to cart button event click.</p>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> add_to_cart_data = {
+    action: {
+        name: <span class="hljs-string">"add_to_cart"</span>
+    },
+    <span class="hljs-comment">// If user is not logged in, this object is not required</span>
+    user: {
+        user_id: <span class="hljs-string">"100"</span>, <span class="hljs-comment">// identifier of user</span>
+        email: <span class="hljs-string">"user@email.com"</span> <span class="hljs-comment">// optional</span>
+    },
+    items: [
+        {
+            item_id: <span class="hljs-string">"4457"</span>, <span class="hljs-comment">//alphanumeric (unique)</span>
+            qty: <span class="hljs-number">12</span>
+        }
+    ]
+};
+
+_predictry.push([<span class="hljs-string">'track'</span>, add_to_cart_data]);</code></pre>
+
+
+
+<h3 id="step-4-track-started-checkout"><em>STEP 4</em>: TRACK STARTED CHECKOUT</h3>
+
+<p>To track started checkout action, you can include this on checkout button event click after user completed the form. So in this matter, user information is compulsory.</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs cs"><span class="hljs-keyword">var</span> started_checkout_data = {
+    action: {
+        name: <span class="hljs-string">"started_checkout"</span>
+    },
+    <span class="hljs-comment">// User info below are compulsory.</span>
+    user: {
+        user_id: <span class="hljs-string">"100"</span>, <span class="hljs-comment">// identifier of user</span>
+        email: <span class="hljs-string">"user@email.com"</span> <span class="hljs-comment">// optional, email of user</span>
+    },
+    items: [
+        {
+            item_id: <span class="hljs-string">"4339"</span>
+        },
+        {
+            item_id: <span class="hljs-string">"2300"</span>
+        }
+    ]
+};
+
+_predictry.push([<span class="hljs-string">'track'</span>, started_checkout_data]);</code></pre>
+
+
+
+<h3 id="step-5-track-buy"><em>STEP 5</em>: TRACK BUY</h3>
+
+<p>To track successful purchases, you can include this on the thank you page or on any page after a purchase is completed.</p>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> buy_data = {
+    action: {
+        name: <span class="hljs-string">"buy"</span>,
+        total: <span class="hljs-number">1730.5</span>
+    },
+    user: {
+        user_id: <span class="hljs-string">"100"</span>, <span class="hljs-comment">// identifier of user</span>
+        email: <span class="hljs-string">"user@email.com"</span> <span class="hljs-comment">// optional</span>
+    },
+    items: [
+        {
+            item_id: <span class="hljs-string">"4339"</span>, <span class="hljs-comment">// identifier of item</span>
+            qty: <span class="hljs-number">12</span>,
+            sub_total: <span class="hljs-number">380</span>
+        },
+        {
+            item_id: <span class="hljs-string">"4335"</span>,
+            qty: <span class="hljs-number">20</span>,
+            sub_total: <span class="hljs-number">1350.5</span>
+        }
+    ]
+};
+
+_predictry.push([<span class="hljs-string">'track'</span>, buy_data]);</code></pre>
+
+
+
+<h3 id="step-6-tracking-other-events-optional"><em>STEP 6</em>: TRACKING OTHER EVENTS (Optional)</h3>
+
+
+
+<h4 id="1-track-search-event">1. TRACK SEARCH EVENT</h4>
+
+<p>To track search event, you can place the code below after search form submit.</p>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> search_data = {
+    action: {
+        name: <span class="hljs-string">"search"</span>,
+        keywords: <span class="hljs-string">"nexus 6 release date"</span>,
+        category: <span class="hljs-string">"all"</span>
+    },
+    <span class="hljs-comment">// If user is not logged in, this object is not required</span>
+    user: {
+        user_id: <span class="hljs-string">"100"</span>, <span class="hljs-comment">// identifier of user</span>
+        email: <span class="hljs-string">"user@email.com"</span> <span class="hljs-comment">// optional</span>
+    }
+};
+
+_predictry.push([<span class="hljs-string">'track'</span>, search_data]);</code></pre>
+
+
+
+<h4 id="2-track-home-page">2. TRACK HOME PAGE</h4>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> track_data = {
+    action: {
+        name: <span class="hljs-string">"view_home_page"</span>
+    },
+    <span class="hljs-comment">// If user is not logged in, this object is not required</span>
+    user: {
+        user_id: <span class="hljs-string">"100"</span>, <span class="hljs-comment">// identifier of user</span>
+        email: <span class="hljs-string">"user@email.com"</span>
+    }
+};
+
+_predictry.push([<span class="hljs-string">'track'</span>, track_data]);</code></pre>
+
+
+
+<h4 id="3-track-category-page">3. TRACK CATEGORY PAGE</h4>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> track_data = {
+    action: {
+        name: <span class="hljs-string">"view_category_page"</span>,
+        category_id: <span class="hljs-string">'100'</span>,
+        category: <span class="hljs-string">'Handphone'</span>,
+        sub_category: <span class="hljs-string">'Blackberry'</span>
+    },
+    <span class="hljs-comment">// If user is not logged in, this object is not required</span>
+    user: {
+        user_id: <span class="hljs-string">"100"</span>, <span class="hljs-comment">// identifier of user</span>
+        email: <span class="hljs-string">"user@email.com"</span>
+    }
+};
+
+_predictry.push([<span class="hljs-string">'track'</span>, track_data]);</code></pre>
+
+
+
+<h2 id="changelog">Changelog</h2>
+
+<ul>
+<li>0.2.3 <br>
+<ul><li>Add more algorithms on the engine.</li>
+<li>Ability to accept custom action track.</li>
+<li>Improvement on data format.</li>
+<li>Improve filter dashboard configuration.</li></ul></li>
+<li>0.2.2 <br>
+<ul><li>Add more actions (add_to_cart, started_checkout)</li></ul></li>
+<li><p>0.2.1</p>
+
+<ul><li>Revamp the class</li>
+<li>Asynchronous</li>
+<li>Added one global function to track.</li>
+<li>Revamp the data format.</li></ul></li>
+<li><p>0.1.0</p>
+
+<ul><li>Initial</li>
+<li>Alpha Release</li></ul></li>
+</ul>
+
+<blockquote>
+  <p>Any questions, please contact <a href="rifki@predictry.com">rifki@predictry.com</a></p>
+</blockquote></div></body>
+</html>

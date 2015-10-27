@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets>
+    <predictry_recommendation type="vventures_predictry/widget_recommendation" module="vventures_predictry">
+        <name>Predictry Recommendation</name>
+        <description>In order to show recommendation, you will have to append widget on any area you wanted.</description>
+        <is_email_compatible>1</is_email_compatible>
+        <parameters>
+            <predictry_widget_id translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value></value>
+                <label>Predictry Widget ID</label>
+                <description>You will find the value from Predictry dashboard &gt; Recommendation</description>
+                <type>text</type>
+            </predictry_widget_id>
+            <predictry_widget_title translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Widget Title</label>
+                <type>select</type>
+                <description>Title of the widget</description>
+                <values>
+                    <default translate="label">
+                        <value>Other Users Who Viewed This Also Viewed</value>
+                        <label>Other Users Who Viewed This Also Viewed</label>
+                    </default>
+                    <list translate="label">
+                        <value>Other Users Who Bought This Also Bought</value>
+                        <label>Other Users Who Bought This Also Bought</label>
+                    </list>
+                </values>
+            </predictry_widget_title>
+            <recommended_products_per_page translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>5</value>
+                <label>Number of Products to Display</label>
+                <description>By default Predictry will return as it is</description>
+                <type>text</type>
+            </recommended_products_per_page>
+            <predictry_thumbnail_size translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Product Thumbnail Size</label>
+                <type>select</type>
+                <values>
+                    <default translate="label">
+                        <value>150</value>
+                        <label>150px</label>
+                    </default>
+                    <list translate="label">
+                        <value>280</value>
+                        <label>280px</label>
+                    </list>
+                </values>
+            </predictry_thumbnail_size>
+            <predictry_style_appearance translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Appearance</label>
+                <type>select</type>
+                <values>
+                    <default translate="label">
+                        <value>vertical</value>
+                        <label>Vertical</label>
+                    </default>
+                    <list translate="label">
+                        <value>horizontal</value>
+                        <label>Horizontal</label>
+                    </list>
+                </values>
+            </predictry_style_appearance>
+            <template>  
+                <visible>0</visible>  
+                <value>vventures/predictry/widget/recommendation.phtml</value>  
+            </template>
+        </parameters>
+    </predictry_recommendation>
+</widgets>
