@@ -39,8 +39,8 @@
                 ?><div class='description'><a href='{{$item_local_url}}'><h4>{{$item['name']}}</h4></a></div><?php
                 ?>
                 <?php 
-                  if ($item['price']) {
-                    <div class='price'><h5>Price: {{$item['price']}}</h5></div>
+                  if (isset($item['price'])) {
+                    echo '<div class=\'price\'><h5>Price:'. $item['price'] . '</h5></div>';
                   }
                 ?>
                     <div class='controls'>
