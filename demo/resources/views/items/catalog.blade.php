@@ -37,7 +37,12 @@
                 ?><div class='column column {{ $child_row_css[$num_per_rows] }}'><?php
                 ?><a href='{{$item_local_url}}'><img src='{{$img_src}}' class="img-responsive img-rounded" alt='Related Thumbnails'></a><?php
                 ?><div class='description'><a href='{{$item_local_url}}'><h4>{{$item['name']}}</h4></a></div><?php
-                ?><div class='price'><h5>Price: {{$item['price']}}</h5></div>
+                ?>
+                <?php 
+                  if ($item['price']) {
+                    <div class='price'><h5>Price: {{$item['price']}}</h5></div>
+                  }
+                ?>
                     <div class='controls'>
                         <!--<button class='btn btn-default add-to-cart' onclick='addToCart({{$item['id']}});'>Add To Cart</button>-->
                         <a class='btn btn-default pull-right view' href='{{ $item_local_url }}'><i class='fa fa-search'></i></a>
