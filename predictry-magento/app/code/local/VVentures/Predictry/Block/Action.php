@@ -38,16 +38,16 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 
 		switch ($action_name)
 		{
-      case "view":
+      		case "view":
 				$product_id	 = Mage::getSingleton("core/session")->getData('predictry_recent_viewed_product_id', true);
 				$product	 = ($product_id > 0) ? Mage::getModel('catalog/product')->load($product_id) : null;
 				break;
 
 			case "add_to_cart":
-				$product_cart									 = Mage::getModel('core/session')->getProductToShoppingCart();
-				$product										 = ($product_cart) ? Mage::getModel('catalog/product')->load($product_cart->getId()) : null;
-        $this->action_data['action_properties']['qty']	 = $product_cart->getQty();
-        break;
+				$product_cart	= Mage::getModel('core/session')->getProductToShoppingCart();
+				$product		= ($product_cart) ? Mage::getModel('catalog/product')->load($product_cart->getId()) : null;
+        		$this->action_data['action_properties']['qty']	 = $product_cart->getQty();
+        		break;
 
 			case "buy":
 				$this->is_single = false;
@@ -79,8 +79,8 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 				$this->action_data['item_id']		 = $product->getId();
 				$this->action_data['description']	 = $product->getName();
         
-        $output .= 'var view_data = {';
-        $output .= 'action: { name: "'. $action_name .'"},';
+        		$output .= 'var view_data = {';
+        		$output .= 'action: { name: "'. $action_name .'"},';
 				//CUSTOMER DATA 
 				$customer_id = Mage::getSingleton('customer/session')->getId();
 				if ($customer_id)
@@ -124,7 +124,8 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
           $output .= 'img_url: "'. $product->getImageUrl() . '",';
           $output .= 'item_url: "'. $product_url . '",';
           $output .= 'description: "'. $product->getDescription() .'",';
-          $output .= 'categories: "'. Mage::getModel('catalog/category')->load($categories[0])->getName() .'"';
+          // Get the first category and send it in array
+          $output .= 'categories: ["'. Mage::getModel('catalog/category')->load($categories[0])->getName() .'"]';
         }
 
 

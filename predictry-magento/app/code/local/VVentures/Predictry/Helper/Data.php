@@ -72,7 +72,7 @@ class VVentures_Predictry_Helper_Data extends Mage_Core_Helper_Abstract
 			'api_recommendation_resources'	 => 'recommendation',
 			'api_cart_resources'			 => 'cart',
 			'api_item_resources'			 => 'item',
-      'api_delete_item'         => 'http://119.81.208.244:8090/fisher/items/'
+      		'api_delete_item'         => 'http://119.81.208.244:8090/fisher/items/'
 		);
 
 		return $api_resources[$key];
