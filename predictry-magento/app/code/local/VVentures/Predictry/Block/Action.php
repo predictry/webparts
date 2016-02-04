@@ -35,6 +35,7 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 	{
 		$action_name = Mage::getSingleton('core/session')->getData('predictry_action_name', true);
 		$product	 = $customer	 = null;
+		$output = '';
 
 		switch ($action_name)
 		{
@@ -123,7 +124,7 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
           $output .= 'price: "'. $product->getPrice() .'",';
           $output .= 'img_url: "'. $product->getImageUrl() . '",';
           $output .= 'item_url: "'. $product_url . '",';
-          $output .= 'description: "'. $product->getDescription() .'",';
+          $output .= 'description: "'. $this->escapeHtml($product->getDescription()) .'",';
           // Get the first category and send it in array
           $output .= 'categories: ["'. Mage::getModel('catalog/category')->load($categories[0])->getName() .'"]';
         }
@@ -144,7 +145,7 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 
 	public function getBulkActionData($action_name, $items)
 	{
-
+	$output = '';
     $output .= 'var view_data = {';
     $output .= 'action: { name: "'. $action_name .'"},';
   

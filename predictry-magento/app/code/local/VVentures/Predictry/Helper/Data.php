@@ -37,9 +37,9 @@ class VVentures_Predictry_Helper_Data extends Mage_Core_Helper_Abstract
 	{
 		$action_data = array(
 			'action'			 => null,
-			'session_id'		 => $_COOKIE['predictry_session'],
+			'session_id'		 => array_key_exists('predictry_session', $_COOKIE)? $_COOKIE['predictry_session']: '',
 			'action_type'		 => 'single',
-			'user_id'			 => $_COOKIE['predictry_userid'],
+			'user_id'			 => array_key_exists('predictry_userid', $_COOKIE)? $_COOKIE['predictry_userid']: '',
 			'item_id'			 => null,
 			'description'		 => null,
 			'item_properties'	 => array(),
@@ -72,7 +72,7 @@ class VVentures_Predictry_Helper_Data extends Mage_Core_Helper_Abstract
 			'api_recommendation_resources'	 => 'recommendation',
 			'api_cart_resources'			 => 'cart',
 			'api_item_resources'			 => 'item',
-      		'api_delete_item'         => 'http://119.81.208.244:8090/fisher/items/'
+      		'api_delete_item'         => 'http://fisher.predictry.com:8090/fisher/items/'
 		);
 
 		return $api_resources[$key];

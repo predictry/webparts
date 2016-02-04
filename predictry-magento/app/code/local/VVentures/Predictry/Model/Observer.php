@@ -16,7 +16,6 @@ class VVentures_Predictry_Model_Observer
     //send "action" view
     if ($observer->getEvent()->getControllerAction()->getFullActionName() === "catalog_product_view")
     {
-      Mage::log("product view", null, "actions.log");
       $product_id  = $observer->getEvent()->getControllerAction()->getRequest()->get('id');
       $product   = Mage::getModel('catalog/product')->load($product_id);
       if (!$product->getId())
