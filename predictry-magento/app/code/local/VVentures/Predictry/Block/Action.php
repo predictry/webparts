@@ -5,7 +5,7 @@
  * Date Created : Jul 7, 2014 1:28:04 PM
  * File         : VVentures/Predictry/Block/Action.php
  * Copyright    : rifkiyandhi@gmail.com
- * Function     : 
+ * Function     :
  */
 class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 {
@@ -39,7 +39,7 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 
 		switch ($action_name)
 		{
-      		case "view":
+			case "view":
 				$product_id	 = Mage::getSingleton("core/session")->getData('predictry_recent_viewed_product_id', true);
 				$product	 = ($product_id > 0) ? Mage::getModel('catalog/product')->load($product_id) : null;
 				break;
@@ -47,8 +47,8 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 			case "add_to_cart":
 				$product_cart	= Mage::getModel('core/session')->getProductToShoppingCart();
 				$product		= ($product_cart) ? Mage::getModel('catalog/product')->load($product_cart->getId()) : null;
-        		$this->action_data['action_properties']['qty']	 = $product_cart->getQty();
-        		break;
+				$this->action_data['action_properties']['qty']	 = $product_cart->getQty();
+				break;
 
 			case "buy":
 				$this->is_single = false;
@@ -56,7 +56,7 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 				$this->order	 = Mage::getModel('sales/order')->loadByIncrementId($this->order_id);
 				$orderItems		 = $this->order->getAllItems();
 				$this->getBulkActionData($action_name, $orderItems);
-	
+
 			case "product_update":
 				break;
 
@@ -71,130 +71,134 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 			if ($product)
 			{
 				$product_collection = Mage::getModel('catalog/product')
-						->getCollection()
-						->addAttributeToFilter('entity_id', $product->getEntityId())
-						->addUrlRewrite();
+					->getCollection()
+					->addAttributeToFilter('entity_id', $product->getEntityId())
+					->addUrlRewrite();
 
 				$product_url = ($product_collection) ? $product_collection->getFirstItem()->getProductUrl() : "";
 
 				$this->action_data['item_id']		 = $product->getId();
 				$this->action_data['description']	 = $product->getName();
-        
-        		$output .= 'var view_data = {';
-        		$output .= 'action: { name: "'. $action_name .'"},';
+
+				$output .= 'var view_data = {';
+				$output .= 'action: { name: "'. $action_name .'"},';
 				//CUSTOMER DATA 
 				$customer_id = Mage::getSingleton('customer/session')->getId();
 				if ($customer_id)
 				{
 					$customer												 = Mage::getSingleton('customer/session')->getCustomer();
 					$this->action_data['user_id']							 = $customer_id;
-          $this->action_data['action_properties']['user_email']	 = $customer->getEmail();
-          $output .= 'user: {';
-          $output .= 'user_id: "'. $customer_id .'",';
-          $output .= 'email: "' . $customer->getEmail() . '"';
-          $output .= '},';
-        }
+					$this->action_data['action_properties']['user_email']	 = $customer->getEmail();
+					$output .= 'user: {';
+					$output .= 'user_id: "'. $customer_id .'",';
+					$output .= 'email: "' . $customer->getEmail() . '"';
+					$output .= '},';
+				}
 
-        // global items parent 
-        $output .= 'items: [ {';
-      
-        // only if the action is add_to_cart
-        if ($action_name === "add_to_cart") 
-        {
-          $output .= 'item_id: "'. $product->getId() .'",';    
-          $output .= 'qty:'. $product_cart->getQty() ;
-        }
+				// global items parent
+				$output .= 'items: [ {';
 
-        // when the user buy generate this more
-        if ($action_name === "buy") 
-        {
-          $products = $this->order->getAllItems();
-          $output .= $products;
-        }
+				// only if the action is add_to_cart
+				if ($action_name === "add_to_cart")
+				{
+					$output .= 'item_id: "'. $product->getId() .'",';
+					$output .= 'qty:'. $product_cart->getQty() ;
+				}
+
+				// when the user buy generate this more
+				if ($action_name === "buy")
+				{
+					$products = $this->order->getAllItems();
+					$output .= $products;
+				}
 
 				//ONLY VIEW ACTION SEND THE REST OF ITEM PROPERTIES
 				if ($action_name === "view")
 				{
 					$categories = $product->getCategoryIds();
-					$this->action_data['item_properties']['categories']	 = Mage::getModel('catalog/category')->load($categories[0])->getName();
+					if (count($categories) > 0) {
+						$this->action_data['item_properties']['categories']	 = Mage::getModel('catalog/category')->load($categories[0])->getName();
+					}
 
-          // js to generate
-          $output .= 'item_id: "'. $product->getId() .'",'; 
-          $output .= 'name: "'. $product->getName() .'",';
-          $output .= 'price: "'. $product->getPrice() .'",';
-          $output .= 'img_url: "'. $product->getImageUrl() . '",';
-          $output .= 'item_url: "'. $product_url . '",';
-          $output .= 'description: "'. $this->escapeHtml($product->getDescription()) .'",';
-          // Get the first category and send it in array
-          $output .= 'categories: ["'. Mage::getModel('catalog/category')->load($categories[0])->getName() .'"]';
-        }
+					// js to generate
+					$output .= 'item_id: "'. $product->getId() .'",';
+					$output .= 'name: "'. $product->getName() .'",';
+					$output .= 'price: "'. $product->getPrice() .'",';
+					$output .= 'img_url: "'. $product->getImageUrl() . '",';
+					$output .= 'item_url: "'. $product_url . '",';
+					$output .= 'description: "'. $this->escapeHtml($product->getDescription()) .'",';
+					// Get the first category and send it in array
+					if (count($categories) > 0) {
+						$output .= 'categories: ["' . Mage::getModel('catalog/category')->load($categories[0])->getName() . '"]';
+					}
+				}
 
 
 			}
 
 			if (count($this->action_data['action_properties']) <= 0)
 				unset($this->action_data['action_properties']);
-    
-      
-      $output .= "} ]";
-      $output .= "};";
-      $output .= "_predictry.push(['track', view_data]);";
-      echo $output;
+
+
+			$output .= "} ]";
+			$output .= "};";
+			$output .= "_predictry.push(['track', view_data]);";
+			echo $output;
 		}
 	}
 
 	public function getBulkActionData($action_name, $items)
 	{
-	$output = '';
-    $output .= 'var view_data = {';
-    $output .= 'action: { name: "'. $action_name .'"},';
-  
-    //CUSTOMER DATA 
-    $customer_id = Mage::getSingleton('customer/session')->getId();
-    if ($customer_id)
-    {
-      // check if user is signed in ?
-      $customer												 = Mage::getSingleton('customer/session')->getCustomer();
-      $output .= 'user: {';
-      $output .= 'user_id: "'. $customer_id .'",';
-      $output .= 'email: "' . $customer->getEmail() . '"';
-      $output .= '},';
-    }
+		$output = '';
+		$output .= 'var view_data = {';
+		$output .= 'action: { name: "'. $action_name .'"},';
 
-    // global items parent 
-    $output .= 'items: [';
+		//CUSTOMER DATA
+		$customer_id = Mage::getSingleton('customer/session')->getId();
+		if ($customer_id)
+		{
+			// check if user is signed in ?
+			$customer												 = Mage::getSingleton('customer/session')->getCustomer();
+			$output .= 'user: {';
+			$output .= 'user_id: "'. $customer_id .'",';
+			$output .= 'email: "' . $customer->getEmail() . '"';
+			$output .= '},';
+		}
 
-    // loop dependency
-    $count = count($items);
-    $i = 0;
+		// global items parent
+		$output .= 'items: [';
+
+		// loop dependency
+		$count = count($items);
+		$i = 0;
 		foreach ($items as $item)
-    {
-      // find that product with that id
-      $product	 = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
+		{
+			// find that product with that id
+			$product	 = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
 
-      $output .= '{';
-      $output .= 'item_id: "'. $product->getId() . '",';
-      $output .= 'qty: '. $item->getQtyOrdered() .',';
-      $output .= 'sub_total:'. ($item->getQtyOrdered() * $product->getPrice()) ;  
+			$output .= '{';
+			$output .= 'item_id: "'. $product->getId() . '",';
+			$output .= 'qty: '. $item->getQtyOrdered() .',';
+			$output .= 'sub_total:'. ($item->getQtyOrdered() * $product->getPrice()) ;
 
-      if ($count > 1) {
-        if(++$i === $count) {
-          $output .= '}';
-        } else {
-          $output .= '},';
-        }
-      } else {
-        $output .= '}';
-      } 
-    }
-    $output .= ']';
-    $output .= "};";
+			if ($count > 1) {
+				if(++$i === $count) {
+					$output .= '}';
+				} else {
+					$output .= '},';
+				}
+			} else {
+				$output .= '}';
+			}
+		}
+		$output .= ']';
+		$output .= "};";
 
-    // global push service
-    $output .= "_predictry.push(['track', view_data]);";
+		// global push service
+		$output .= "_predictry.push(['track', view_data]);";
 
-    // print out the final script
-    echo $output;
+		// print out the final script
+		echo $output;
 	}
 
 	public function isSingle()
