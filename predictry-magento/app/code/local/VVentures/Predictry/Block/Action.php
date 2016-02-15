@@ -56,6 +56,7 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 				$this->order	 = Mage::getModel('sales/order')->loadByIncrementId($this->order_id);
 				$orderItems		 = $this->order->getAllItems();
 				$this->getBulkActionData($action_name, $orderItems);
+				break;
 
 			case "product_update":
 				break;
@@ -102,14 +103,6 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 					$item['qty'] = $product_cart->getQty();
 				}
 
-				// when the user buy generate this more
-				// TODO: Fixes this when buy action is fixed!
-//				if ($action_name === "buy")
-//				{
-//					$products = $this->order->getAllItems();
-//					$output .= $products;
-//				}
-
 				//ONLY VIEW ACTION SEND THE REST OF ITEM PROPERTIES
 				if ($action_name === "view")
 				{
@@ -147,7 +140,7 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 		}
 	}
 
-	public function getBulkActionData($action_name, $items)
+	public function getBulkActionData($action_name, $all_items)
 	{
 		$output = '';
 		$json_data = ['action'=>['name'=>$action_name]];
@@ -163,22 +156,20 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 
 		// global items parent
 		$items = [];
-		$output .= 'items: [';
 
 		// loop dependency
-		$count = count($items);
-		$i = 0;
-		foreach ($items as $item)
+		foreach ($all_items as $item)
 		{
 			// find that product with that id
 			$product	 = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
 			$items[] = ['item_id' => $product->getId(),
-						'qty' => $product->getQtyOrdered(),
-						'sub_total' => ($item->getQtyOrdered() * $product->getPrice())];
+						'qty' => $item->getQtyOrdered(),
+						'sub_total' => $item->getRowTotal()];
 		}
+		$json_data['items'] = $items;
 
 		// global push service
-		$output = 'var view_date = ' . json_encode($json_data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+		$output = 'var view_data = ' . json_encode($json_data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 		$output .= "\n_predictry.push(['track', view_data]);";
 
 		// print out the final script
