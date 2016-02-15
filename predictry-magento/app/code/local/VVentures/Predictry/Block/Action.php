@@ -80,37 +80,35 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 				$this->action_data['item_id']		 = $product->getId();
 				$this->action_data['description']	 = $product->getName();
 
-				$output .= 'var view_data = {';
-				$output .= 'action: { name: "'. $action_name .'"},';
-				//CUSTOMER DATA 
+				$json_data = ['action' => ['name' => $action_name]];
+
+				//CUSTOMER DATA
 				$customer_id = Mage::getSingleton('customer/session')->getId();
 				if ($customer_id)
 				{
 					$customer												 = Mage::getSingleton('customer/session')->getCustomer();
 					$this->action_data['user_id']							 = $customer_id;
 					$this->action_data['action_properties']['user_email']	 = $customer->getEmail();
-					$output .= 'user: {';
-					$output .= 'user_id: "'. $customer_id .'",';
-					$output .= 'email: "' . $customer->getEmail() . '"';
-					$output .= '},';
+					$json_data['user'] = ['user_id' => $customer_id, 'email' => $customer->getEmail()];
 				}
 
 				// global items parent
-				$output .= 'items: [ {';
+				$item = [];
 
 				// only if the action is add_to_cart
 				if ($action_name === "add_to_cart")
 				{
-					$output .= 'item_id: "'. $product->getId() .'",';
-					$output .= 'qty:'. $product_cart->getQty() ;
+					$item['item_id'] = $product->getId();
+					$item['qty'] = $product_cart->getQty();
 				}
 
 				// when the user buy generate this more
-				if ($action_name === "buy")
-				{
-					$products = $this->order->getAllItems();
-					$output .= $products;
-				}
+				// TODO: Fixes this when buy action is fixed!
+//				if ($action_name === "buy")
+//				{
+//					$products = $this->order->getAllItems();
+//					$output .= $products;
+//				}
 
 				//ONLY VIEW ACTION SEND THE REST OF ITEM PROPERTIES
 				if ($action_name === "view")
@@ -121,18 +119,22 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 					}
 
 					// js to generate
-					$output .= 'item_id: "'. $product->getId() .'",';
-					$output .= 'name: "'. $product->getName() .'",';
-					$output .= 'price: "'. $product->getPrice() .'",';
-					$output .= 'img_url: "'. $product->getImageUrl() . '",';
-					$output .= 'item_url: "'. $product_url . '",';
-					$output .= 'description: "'. $this->escapeHtml($product->getDescription()) .'",';
+					$item['item_id'] = $product->getId();
+					$item['name'] = $product->getName();
+					$item['price'] = $product->getPrice();
+					$item['img_url'] = $product->getImageUrl();
+					$item['item_url'] = $product_url;
+					$item['description'] = $this->escapeHtml($product->getShortDescription());
+
 					// Get the first category and send it in array
 					if (count($categories) > 0) {
-						$output .= 'categories: ["' . Mage::getModel('catalog/category')->load($categories[0])->getName() . '"]';
+						$item['categories'] = [Mage::getModel('catalog/category')->load($categories[0])->getName()];
 					}
 				}
 
+				$json_data['items'] = [$item];
+
+				$output = 'var view_data = ' . json_encode($json_data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . ';';
 
 			}
 
@@ -140,9 +142,7 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 				unset($this->action_data['action_properties']);
 
 
-			$output .= "} ]";
-			$output .= "};";
-			$output .= "_predictry.push(['track', view_data]);";
+			$output .= "\n_predictry.push(['track', view_data]);";
 			echo $output;
 		}
 	}
@@ -150,22 +150,19 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 	public function getBulkActionData($action_name, $items)
 	{
 		$output = '';
-		$output .= 'var view_data = {';
-		$output .= 'action: { name: "'. $action_name .'"},';
+		$json_data = ['action'=>['name'=>$action_name]];
 
 		//CUSTOMER DATA
 		$customer_id = Mage::getSingleton('customer/session')->getId();
 		if ($customer_id)
 		{
 			// check if user is signed in ?
-			$customer												 = Mage::getSingleton('customer/session')->getCustomer();
-			$output .= 'user: {';
-			$output .= 'user_id: "'. $customer_id .'",';
-			$output .= 'email: "' . $customer->getEmail() . '"';
-			$output .= '},';
+			$customer = Mage::getSingleton('customer/session')->getCustomer();
+			$json_data['user'] = ['user_id' => $customer_id, 'email' => $customer->getEmail()];
 		}
 
 		// global items parent
+		$items = [];
 		$output .= 'items: [';
 
 		// loop dependency
@@ -175,27 +172,14 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 		{
 			// find that product with that id
 			$product	 = Mage::getModel('catalog/product')->load($item->getProduct()->getId());
-
-			$output .= '{';
-			$output .= 'item_id: "'. $product->getId() . '",';
-			$output .= 'qty: '. $item->getQtyOrdered() .',';
-			$output .= 'sub_total:'. ($item->getQtyOrdered() * $product->getPrice()) ;
-
-			if ($count > 1) {
-				if(++$i === $count) {
-					$output .= '}';
-				} else {
-					$output .= '},';
-				}
-			} else {
-				$output .= '}';
-			}
+			$items[] = ['item_id' => $product->getId(),
+						'qty' => $product->getQtyOrdered(),
+						'sub_total' => ($item->getQtyOrdered() * $product->getPrice())];
 		}
-		$output .= ']';
-		$output .= "};";
 
 		// global push service
-		$output .= "_predictry.push(['track', view_data]);";
+		$output = 'var view_date = ' . json_encode($json_data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+		$output .= "\n_predictry.push(['track', view_data]);";
 
 		// print out the final script
 		echo $output;
