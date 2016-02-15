@@ -128,12 +128,20 @@ class VVentures_Predictry_Model_Observer
       'description'  => $product->getName(),
       'properties'   => array(
         'item_url'     => $product_url,
-        'img_url'    => $product->getImageUrl(),
         'price'      => $product->getPrice(),
         'category'     => Mage::getModel('catalog/category')->load($categories[0])->getName(),
         'inventory_qty'  => $inventory_status
       )
     );
+
+    try {
+        $image_helper = Mage::helper('catalog/image')->init($product, 'image');
+        if (!is_null($image_helper)) {
+            $item_data['properties']['img_url'] = (string)$image_helper->resize(265);
+        }
+    } catch (Exception $e) {
+        // do nothing if image doesn't exist
+    }
 
     $curl->write(Zend_Http_Client::POST, $url, '1.0', array('X-Predictry-Server-Tenant-ID: ' . $tenant_id, 'X-Predictry-Server-Api-Key: ' . $api_key), http_build_query($item_data));
     $curl->read();
