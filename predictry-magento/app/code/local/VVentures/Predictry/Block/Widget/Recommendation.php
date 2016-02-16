@@ -21,23 +21,11 @@ class VVentures_Predictry_Block_Widget_Recommendation extends VVentures_Predictr
 	{
 		$current_product = $this->getProduct();
 		$recomm_response = $this->getRecommendation($current_product, $this->getData('predictry_widget_id'));
-		$recomm			 = null;
-		if ($recomm_response && is_array($recomm_response->recomm))
-		{
-			$recomm						 = $recomm_response->recomm;
-			$this->_widget_instance_id	 = $recomm_response->widget_instance_id;
-		}
-
 		$recomm_product_ids = array();
-		foreach ($recomm as $obj)
-			array_push($recomm_product_ids, $obj->id);
-
-		/*
-		 * JUST SAMPLE DATA
-		 */
-		$this->_widget_instance_id	 = 5;
-		$recomm_product_ids			 = array(395, 419, 399, 437);
-
+		if ($recomm_response && is_array($recomm_response->items))
+		{
+			$recomm_product_ids = $recomm_response->items;
+		}
 		if (count($recomm_product_ids) > 0)
 		{
 			$this->_itemCollection = Mage::getModel('catalog/product')->getCollection()->addIdFilter($recomm_product_ids);

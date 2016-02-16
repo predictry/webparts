@@ -72,7 +72,8 @@ class VVentures_Predictry_Helper_Data extends Mage_Core_Helper_Abstract
 			'api_recommendation_resources'	 => 'recommendation',
 			'api_cart_resources'			 => 'cart',
 			'api_item_resources'			 => 'item',
-      		'api_delete_item'         => 'http://fisher.predictry.com:8090/fisher/items/'
+      		'api_delete_item'         		 => 'http://fisher.predictry.com:8090/fisher/items/',
+			's3_url'						 => 'http://predictry.s3.amazonaws.com'
 		);
 
 		return $api_resources[$key];

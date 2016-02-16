@@ -71,8 +71,8 @@
                 </values>
             </predictry_style_appearance>
             <template>  
-                <visible>0</visible>  
-                <value>vventures/predictry/widget/recommendation.phtml</value>  
+                <visible>0</visible>
+                <value>vventures/predictry/widget/recommendation.phtml</value>
             </template>
         </parameters>
     </predictry_recommendation>

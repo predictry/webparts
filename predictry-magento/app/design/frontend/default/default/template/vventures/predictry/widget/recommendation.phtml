@@ -15,7 +15,7 @@ $limit	 = $this->getItemLimit();
 						<a href="<?php echo $_link->getProductUrl() . '?predictry_src=' . $this->getWidgetInstanceId(); ?>" title="<?php echo $this->escapeHtml($_link->getName()) ?>" class="">
 							<img src="<?php echo $this->helper('catalog/image')->init($_link, 'small_image')->resize($this->getThumbnailSize()) ?>" alt="<?php echo $this->escapeHtml($_link->getName()) ?>" />
 						</a>
-						<h3 class="product-name"><a href="<?php echo $_link->getProductUrl() . '?predictry_src=' . $this->getWidgetInstanceId(); ?>" title="<?php echo $this->escapeHtml($_link->getName()) ?>"><?php echo $this->escapeHtml($_link->getName()) ?></a></h3>
+						<h3 class="product-name"><a href="<?php echo $_link->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_link->getName()) ?>"><?php echo $this->escapeHtml($_link->getName()) ?></a></h3>
 							<?php echo $this->getPriceHtml($_link, true, '-upsell') ?>
 							<?php echo $this->getReviewsSummaryHtml($_link) ?>
 					</li>

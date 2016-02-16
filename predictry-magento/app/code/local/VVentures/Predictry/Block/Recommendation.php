@@ -15,23 +15,15 @@ class VVentures_Predictry_Block_Recommendation extends Mage_Catalog_Block_Produc
 		if (!Mage::helper("vventures_predictry")->getEnabled())
 			return false;
 
-		$customer_id = (Mage::getSingleton('customer/session')->getId()) ? Mage::getSingleton('customer/session')->getId() : $_COOKIE['predictry_userid'];
-
-		$reco_data = array(
-			'item_id'	 => $product->getId(),
-			'user_id'	 => $customer_id,
-			'widget_id'	 => $widget_id,
-			'session_id' => $_COOKIE['predictry_session']
-		);
+		$item_id = $product->getId();
 
 		$json_response = null;
 		try
 		{
 			$curl		 = new Varien_Http_Adapter_Curl();
-			$url		 = Mage::helper("vventures_predictry")->getApiResources('api_url') . Mage::helper("vventures_predictry")->getApiResources('api_recommendation_resources');
+			$baseUrl		 = Mage::helper("vventures_predictry")->getApiResources('s3_url');
 			$tenant_id	 = Mage::helper("vventures_predictry")->getTenantId();
-			$api_key	 = Mage::helper("vventures_predictry")->getApiKey();
-			$curl->write(Zend_Http_Client::GET, $url . "?" . http_build_query($reco_data), '1.0', array('X-Predictry-Server-Tenant-ID: ' . $tenant_id, 'X-Predictry-Server-Api-Key: ' . $api_key));
+			$curl->write(Zend_Http_Client::GET, "$baseUrl/data/tenants/$tenant_id/recommendations/duo/$item_id.json", '1.0');
 			$response	 = $curl->read();
 
 			$temp_response	 = explode("\n", $response);
