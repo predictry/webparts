@@ -58,9 +58,6 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 				$this->getBulkActionData($action_name, $orderItems);
 				break;
 
-			case "product_update":
-				break;
-
 			default:
 				return "";
 		}

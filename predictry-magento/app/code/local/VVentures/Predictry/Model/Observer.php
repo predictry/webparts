@@ -93,59 +93,61 @@ class VVentures_Predictry_Model_Observer
   }
 
   //update on admin
-  public function logUpdate(Varien_Event_Observer $observer)
-  {
-    $product = $observer->getEvent()->getProduct();
-    $curl  = new Varien_Http_Adapter_Curl();
-    $url   = Mage::helper("vventures_predictry")->getApiResources('api_url') . Mage::helper("vventures_predictry")->getApiResources('api_item_resources');
-
-    $tenant_id       = Mage::helper("vventures_predictry")->getTenantId();
-    $api_key       = Mage::helper("vventures_predictry")->getApiKey();
-    $product_collection  = Mage::getModel('catalog/product')
-        ->getCollection()
-        ->addAttributeToFilter('entity_id', $product->getEntityId())
-        ->addUrlRewrite();
-
-    $product_url = ($product_collection) ? $product_collection->getFirstItem()->getProductUrl() : "";
-    $categories  = $product->getCategoryIds();
-
-    $stock_data      = $product->getData('stock_data');
-    $inventory_status  = 'out_of_stock';
-    if ($stock_data['manage_stock'] || $stock_data['use_config_manage_stock'])
-    {
-      if ($stock_data['is_in_stock'] && !isset($stock_data['qty']))
-        $inventory_status  = ($stock_data['is_in_stock']) ? 'in_stock' : 'out_of_stock';
-      else if ($stock_data['is_in_stock'] && isset($stock_data['qty']))
-        $inventory_status  = $stock_data['qty'];
-      else
-        $inventory_status  = 'out_of_stock';
-    }
-    else
-      $inventory_status = 'in_stock';
-
-    $item_data = array(
-      'item_id'    => $product->getId(),
-      'description'  => $product->getName(),
-      'properties'   => array(
-        'item_url'     => $product_url,
-        'price'      => $product->getPrice(),
-        'category'     => Mage::getModel('catalog/category')->load($categories[0])->getName(),
-        'inventory_qty'  => $inventory_status
-      )
-    );
-
-    try {
-        $image_helper = Mage::helper('catalog/image')->init($product, 'image');
-        if (!is_null($image_helper)) {
-            $item_data['properties']['img_url'] = (string)$image_helper->resize(265);
-        }
-    } catch (Exception $e) {
-        // do nothing if image doesn't exist
-    }
-
-    $curl->write(Zend_Http_Client::POST, $url, '1.0', array('X-Predictry-Server-Tenant-ID: ' . $tenant_id, 'X-Predictry-Server-Api-Key: ' . $api_key), http_build_query($item_data));
-    $curl->read();
-  }
+    // TODO: This currently does nothing since the endpoint in Pongo is not available so it will always
+    // ends up with 404 Not Found.
+//  public function logUpdate(Varien_Event_Observer $observer)
+//  {
+//    $product = $observer->getEvent()->getProduct();
+//    $curl  = new Varien_Http_Adapter_Curl();
+//    $url   = Mage::helper("vventures_predictry")->getApiResources('api_url') . Mage::helper("vventures_predictry")->getApiResources('api_item_resources');
+//
+//    $tenant_id       = Mage::helper("vventures_predictry")->getTenantId();
+//    $api_key       = Mage::helper("vventures_predictry")->getApiKey();
+//    $product_collection  = Mage::getModel('catalog/product')
+//        ->getCollection()
+//        ->addAttributeToFilter('entity_id', $product->getEntityId())
+//        ->addUrlRewrite();
+//
+//    $product_url = ($product_collection) ? $product_collection->getFirstItem()->getProductUrl() : "";
+//    $categories  = $product->getCategoryIds();
+//
+//    $stock_data      = $product->getData('stock_data');
+//    $inventory_status  = 'out_of_stock';
+//    if ($stock_data['manage_stock'] || $stock_data['use_config_manage_stock'])
+//    {
+//      if ($stock_data['is_in_stock'] && !isset($stock_data['qty']))
+//        $inventory_status  = ($stock_data['is_in_stock']) ? 'in_stock' : 'out_of_stock';
+//      else if ($stock_data['is_in_stock'] && isset($stock_data['qty']))
+//        $inventory_status  = $stock_data['qty'];
+//      else
+//        $inventory_status  = 'out_of_stock';
+//    }
+//    else
+//      $inventory_status = 'in_stock';
+//
+//    $item_data = array(
+//      'item_id'    => $product->getId(),
+//      'description'  => $product->getName(),
+//      'properties'   => array(
+//        'item_url'     => $product_url,
+//        'price'      => $product->getPrice(),
+//        'category'     => Mage::getModel('catalog/category')->load($categories[0])->getName(),
+//        'inventory_qty'  => $inventory_status
+//      )
+//    );
+//
+//    try {
+//        $image_helper = Mage::helper('catalog/image')->init($product, 'image');
+//        if (!is_null($image_helper)) {
+//            $item_data['properties']['img_url'] = (string)$image_helper->resize(265);
+//        }
+//    } catch (Exception $e) {
+//        // do nothing if image doesn't exist
+//    }
+//
+//    $curl->write(Zend_Http_Client::POST, $url, '1.0', array('X-Predictry-Server-Tenant-ID: ' . $tenant_id, 'X-Predictry-Server-Api-Key: ' . $api_key), http_build_query($item_data));
+//    $curl->read();
+//  }
 
   // delete item
   public function deleteItem($eventObject) {
