@@ -58,6 +58,11 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 				$this->getBulkActionData($action_name, $orderItems);
 				break;
 
+			case "delete":
+				$product_id	 = Mage::getSingleton("core/session")->getData('predictry_recent_viewed_product_id', true);
+				$this->handleDeleteAction($product_id);
+				break;
+
 			default:
 				return "";
 		}
@@ -171,6 +176,11 @@ class VVentures_Predictry_Block_Action extends Mage_Core_Block_Template
 
 		// print out the final script
 		echo $output;
+	}
+
+	public function handleDeleteAction($product_id)
+	{
+		echo "var item_id = ['$product_id'];\n_predictry.push(['removeItem', item_id]);";
 	}
 
 	public function isSingle()

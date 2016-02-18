@@ -12,7 +12,6 @@ class VVentures_Predictry_Model_Observer
 
   public function controllerActionBefore(Varien_Event_Observer $observer)
   {
-
     //send "action" view
     if ($observer->getEvent()->getControllerAction()->getFullActionName() === "catalog_product_view")
     {
@@ -21,7 +20,18 @@ class VVentures_Predictry_Model_Observer
       if (!$product->getId())
         return;
 
-      Mage::getSingleton('core/session')->setData('predictry_action_name', 'view');
+      // If product is not in stock, send delete action instead.
+      $stockItem = $product->getStockItem();
+      if ($stockItem) {
+          if (!$stockItem->getIsInStock() || ($stockItem->getQty() == 0)) {
+              Mage::getSingleton('core/session')->setData('predictry_action_name', 'delete');
+          } else {
+              Mage::getSingleton('core/session')->setData('predictry_action_name', 'view');
+          }
+      } else {
+          Mage::getSingleton('core/session')->setData('predictry_action_name', 'view');
+      }
+
       Mage::getSingleton('core/session')->setData('predictry_recent_viewed_product_id', $product_id);
     }
 

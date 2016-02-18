@@ -25,9 +25,7 @@ class VVentures_Predictry_Block_Recommendation extends Mage_Catalog_Block_Produc
 			$tenant_id	 = Mage::helper("vventures_predictry")->getTenantId();
 			$curl->write(Zend_Http_Client::GET, "$baseUrl/data/tenants/$tenant_id/recommendations/duo/$item_id.json", '1.0');
 			$response	 = $curl->read();
-
-			$temp_response	 = explode("\n", $response);
-			$json_response	 = end($temp_response);
+			$json_response = trim(strstr($response, "\r\n\r\n"));
 			$curl->close();
 		}
 		catch (Exception $ex)
