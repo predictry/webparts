@@ -13,23 +13,31 @@
                 <description>You will find the value from Predictry dashboard &gt; Recommendation</description>
                 <type>text</type>
             </predictry_widget_id>
-            <predictry_widget_title translate="label">
+            <predictry_widget_type translate="label">
                 <required>1</required>
                 <visible>1</visible>
-                <label>Widget Title</label>
+                <label>Recommendation Type</label>
                 <type>select</type>
                 <description>Title of the widget</description>
                 <values>
-                    <default translate="label">
-                        <value>Other Users Who Viewed This Also Viewed</value>
+                    <duo translate="label">
+                        <value>duo</value>
+                        <label>Recommended Items</label>
+                    </duo>
+                    <oivt translate="label">
+                        <value>oivt</value>
                         <label>Other Users Who Viewed This Also Viewed</label>
-                    </default>
-                    <list translate="label">
-                        <value>Other Users Who Bought This Also Bought</value>
+                    </oivt>
+                    <oipt translate="label">
+                        <value>oipt</value>
                         <label>Other Users Who Bought This Also Bought</label>
-                    </list>
+                    </oipt>
+                    <similar translate="label">
+                        <value>similiar</value>
+                        <label>Similar Items</label>
+                    </similar>
                 </values>
-            </predictry_widget_title>
+            </predictry_widget_type>
             <recommended_products_per_page translate="label">
                 <required>1</required>
                 <visible>1</visible>

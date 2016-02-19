@@ -20,7 +20,7 @@ class VVentures_Predictry_Block_Widget_Recommendation extends VVentures_Predictr
 	protected function _prepareData()
 	{
 		$current_product = $this->getProduct();
-		$recomm_response = $this->getRecommendation($current_product, $this->getData('predictry_widget_id'));
+		$recomm_response = $this->getRecommendation($current_product, $this->getData('predictry_widget_id'), $this->getWidgetType());
 		$recomm_product_ids = array();
 		if ($recomm_response && is_array($recomm_response->items))
 		{
@@ -56,7 +56,24 @@ class VVentures_Predictry_Block_Widget_Recommendation extends VVentures_Predictr
 
 	public function getWidgetTitle()
 	{
-		return $this->getData('predictry_widget_title');
+		$widgetType =  $this->getWidgetType();
+		switch ($widgetType) {
+			case "oivt":
+				return "Other Users Who Viewed This Also Viewed";
+			case "oipt":
+				return "Other Users Who Bought This Also Bought";
+			case "duo":
+				return "Recommended Items";
+			case "similiar":
+				return "Similar Items";
+			default:
+				return "Recommendations";
+		}
+	}
+
+	public function getWidgetType()
+	{
+		return $this->getData('predictry_widget_type');
 	}
 
 	public function getItemCollection()
