@@ -48,7 +48,7 @@ class VVentures_Predictry_Model_Observer
     }
 
     //send "started_checkout" action
-    if ($observer->getEvent()->getControllerAction()->getFullActionName() === "checkout_onepage_index")
+    if (in_array($observer->getEvent()->getControllerAction()->getFullActionName(), ["checkout_onepage_index", "onestepcheckout_onestep_index"]))
     {
       Mage::log("started checkout", null, "actions.log");
       Mage::getSingleton('core/session')->setData('predictry_action_name', 'started_checkout');
@@ -71,7 +71,7 @@ class VVentures_Predictry_Model_Observer
     }
 
     //send "buy" action
-    if ($observer->getEvent()->getControllerAction()->getFullActionName() === "checkout_onepage_success")
+    if (in_array($observer->getEvent()->getControllerAction()->getFullActionName(), ['checkout_onepage_success', 'onestepcheckout_onestep_success']))
     {
       Mage::log("item bought", null, "actions.log");
       Mage::getSingleton('core/session')->setData('predictry_action_name', 'buy');
