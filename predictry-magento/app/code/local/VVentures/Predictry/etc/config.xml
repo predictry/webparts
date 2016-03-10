@@ -28,20 +28,6 @@
         </models>
 
         <events>
-            <!-- save product detail on admin page -->
-            <catalog_product_save_after>
-                <observers>
-                    <vventures_predictry>
-                        <!-- the model to be instantiated -->
-                        <class>vventures_predictry/observer</class>
-                        <!-- the method of the class to be called -->
-                        <method>logUpdate</method>
-                        <!-- The type of class to instantiate -->
-                        <type>singleton</type>
-                    </vventures_predictry>
-                </observers>
-            </catalog_product_save_after>
-
             <!-- delete the product on the server when product deleted -->
             <catalog_product_delete_after>
                 <observers>
@@ -55,7 +41,6 @@
                     </vventures_predictry>
                 </observers>
             </catalog_product_delete_after>
-
         </events>
     </global>
 
